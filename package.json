@@ -1,11 +1,15 @@
 {
-  "private": true,
   "name": "git-ppt",
+  "version": "0.1.6",
+  "description": "git slides",
+  "author": "iron <472263356@qq.com>",
+  "license": "ISC",
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
     "export": "slidev export",
     "prepare": "husky install",
+    "release": "standard-version",
     "test": "echo test",
     "commit": "git-cz"
   },
@@ -19,7 +23,8 @@
     "@commitlint/config-conventional": "^12.1.4",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "3.3.0",
-    "husky": "^6.0.0"
+    "husky": "^6.0.0",
+    "standard-version": "^9.3.0"
   },
   "config": {
     "commitizen": {
