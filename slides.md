@@ -207,6 +207,19 @@ git stash
 <CommitMessage/>
 
 ---
+
+# Commit message 案例
+
+<div>
+<img v-click class="h-50 mb-10" src="/commit_1.jpeg"/>
+  <div class="flex">
+    <img v-click class="h-30 mr-10" src="/commit_2.jpeg"/>
+    <img v-click class="h-30" src="/commit_3.jpeg"/>
+  </div>
+</div>
+
+
+---
 name: 分支管理(一)
 ---
 # Git Flow
