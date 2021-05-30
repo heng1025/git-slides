@@ -14,7 +14,7 @@
     "commit": "git-cz"
   },
   "dependencies": {
-    "@slidev/cli": "^0.13.9",
+    "@slidev/cli": "^0.16.0",
     "@slidev/theme-default": "*",
     "@slidev/theme-seriph": "*"
   },

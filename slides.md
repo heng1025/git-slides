@@ -30,16 +30,12 @@ info: |
 
 # 常用操作
 
-<v-clicks>
-
 - git cherry-pick
-- git rebase 
+- git rebase
 - git merge
-- git stash 
+- git stash
 - git revert
 - git reset
-
-</v-clicks>
 
 ---
 layout: center
@@ -70,6 +66,7 @@ name: 合并操作比较
 git checkout main
 git merge bugFix
 ```
+
 </v-click>
 
 <v-click>
@@ -92,6 +89,7 @@ git merge bugFix
 git checkout bugFix
 git rebase main
 ```
+
 </div>
 <div v-click>
 
@@ -102,7 +100,6 @@ git merge bugFix
 
 </div>
 </div>
-
 
 <div v-click class="relative">
 
@@ -123,6 +120,7 @@ git merge bugFix
 ---
 
 # 撤销变更
+
 git revert/reset
 
 ```bash
@@ -137,7 +135,7 @@ git revert HEAD # 变更远程
 
 ---
 
-# 任意修改提交记录 
+# 任意修改提交记录
 
 <div class="grid grid-cols-2 gap-x-8">
 
@@ -145,12 +143,11 @@ git revert HEAD # 变更远程
 
 ### cherry-pick
 
-
 ```bash
 # 将指定的提交应用到当前分支
 git cherry-pick <commitHash> [<commitHash> ...]
 # 将指定分支的最近一次提交应用到当前分支
-git cherry-pick <branch-name> 
+git cherry-pick <branch-name>
 ```
 
 <div class="flex mt-4">
@@ -179,8 +176,39 @@ git rebase -i HEAD~4
 </div>
 
 ---
-name: 分支管理(一)
+
+# 临时保持修改及恢复修改
+
+git stash
+
+- `git stash [message]` 保存
+- `git stash list` 查看保存记录
+- `git stash pop [stash@{num}]` 恢复一次
+- `git stash apply [stash@{num}]` 恢复多次
+- `git stash drop [stash@{num}]` 删除指定的保存记录
+- `git stash clear` 删除所有的记录
+
 ---
+
+# Commit message 规范
+
+基本格式
+
+```
+<type>(<scope>): <subject>
+<BLANK LINE>
+<body>
+<BLANK LINE>
+<footer>
+```
+
+### 字段说明
+
+<CommitMessage/>
+
+---
+
+## name: 分支管理(一)
 
 # Git Flow
 
@@ -188,10 +216,9 @@ name: 分支管理(一)
 
 <div class="w-150 m-auto"><img src="/branch_1.png"></div>
 
+---
 
----
-name: 分支管理(二)
----
+## name: 分支管理(二)
 
 # Git Flow
 
@@ -199,10 +226,9 @@ name: 分支管理(二)
 
 <div class="w-80 m-auto"><img src="/branch_2.png"></div>
 
+---
 
----
-name: 分支管理(三)
----
+## name: 分支管理(三)
 
 # Git Flow
 
@@ -212,21 +238,15 @@ name: 分支管理(三)
 
 ---
 
-# commit message 规范
-
----
-
 # 常用的工具
 
 - gitmoji
 - lint-staged
 - husky
 
-
 ---
 
 # 生成 CHANGELOG
-
 
 ---
 
@@ -234,7 +254,7 @@ name: 分支管理(三)
 
 ---
 
-# lock branch 
+# lock branch
 
 ---
 
