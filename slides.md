@@ -207,9 +207,8 @@ git stash
 <CommitMessage/>
 
 ---
-
-## name: 分支管理(一)
-
+name: 分支管理(一)
+---
 # Git Flow
 
 分支管理(一)
@@ -217,8 +216,8 @@ git stash
 <div class="w-150 m-auto"><img src="/branch_1.png"></div>
 
 ---
-
-## name: 分支管理(二)
+name: 分支管理(二)
+---
 
 # Git Flow
 
@@ -227,8 +226,8 @@ git stash
 <div class="w-80 m-auto"><img src="/branch_2.png"></div>
 
 ---
-
-## name: 分支管理(三)
+name: 分支管理(三)
+---
 
 # Git Flow
 
