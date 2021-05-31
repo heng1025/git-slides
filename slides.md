@@ -220,6 +220,24 @@ git stash
 
 
 ---
+
+# Commit message 工具
+
+- [commitizen](http://commitizen.github.io/cz-cli/)
+
+![commit message case 3](/commit_3.png)
+
+- [commitlint](https://commitlint.js.org/#/)
+
+![commit message case 3](/commit_4.png)
+
+
+
+---
+
+# 生成 CHANGELOG
+
+---
 name: 分支管理(一)
 ---
 # Git Flow
@@ -258,12 +276,7 @@ name: 分支管理(三)
 
 ---
 
-# 生成 CHANGELOG
-
----
-
 # Pull Request
-
 ---
 
 # lock branch
