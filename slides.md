@@ -118,10 +118,12 @@ git merge bugFix
 </div>
 
 ---
+name: 撤销变更（一）
+---
 
 # 撤销变更
 
-git revert/reset
+git revert/reset 区别
 
 ```bash
 git reset HEAD^ # 变更本地,只是修改了历史提交记录
@@ -132,6 +134,14 @@ git revert HEAD # 变更远程
   <div class="mr-4" v-click><img src="/reset_1.png"></div>
   <div v-click><img src="/reset_2.png"></div>
 </div>
+
+---
+name: 撤销变更（二）
+---
+
+# 撤销变更
+
+![regret](/reset_3.png)
 
 ---
 
@@ -187,6 +197,12 @@ git stash
 - `git stash apply [stash@{num}]` 恢复多次
 - `git stash drop [stash@{num}]` 删除指定的保存记录
 - `git stash clear` 删除所有的记录
+
+---
+
+# lock branch
+
+TODO
 
 ---
 
@@ -282,55 +298,60 @@ npx --no-install commitlint --edit "$1"
 <img src="/changelog.png" class="max-h-80 mt-10"/>
 
 ---
-name: 分支管理(一)
+name: 分支管理（一）
 ---
 # Git Flow
 
-分支管理(一)
+分支管理
 
 <div class="w-150 m-auto"><img src="/branch_1.png"></div>
 
 ---
-name: 分支管理(二)
+name: 分支管理（二）
 ---
 
 # Git Flow
 
-分支管理(二)
+分支管理
 
 <div class="w-80 m-auto"><img src="/branch_2.png"></div>
 
 ---
-name: 分支管理(三)
+name: 分支管理（三）
 ---
 
 # Git Flow
 
-分支管理(三)
+分支管理
 
 <div class="w-150 m-auto"><img src="/branch_3.png"></div>
 
 ---
 
-# 常用的工具
-
-- gitmoji
-- lint-staged
-- husky
-
----
-
 # Pull Request
----
 
-# lock branch
+> Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
 
----
+无论采用哪种Git Flow，最佳的做法是仓库管理员已经将**master分支**设置为**保护分支**，开发人员应创建临时分支，完成后向**master分支**发起 pull request，
+代码通过CI(检查代码是否符合编写规范，commit message是否遵守约定等等)和代码评审后合并进主分支（同时删除临时分支）。
 
-# Code Review
+### 大致的流程
 
----
-
-# Coding 持续集成
+![pr](/pr.png)
 
 ---
+
+# 代码评审
+
+创建pull request后，添加评审员，并及时通知，评审者主要审核基本信息是否完整，对代码逐行查看，
+并及时沟通。
+
+![cr](/cr.png)
+
+---
+
+# 参考信息
+
+- [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/)
+- [git learning](https://learngitbranching.js.org/)
+- [git doc](https://git-scm.com/doc)

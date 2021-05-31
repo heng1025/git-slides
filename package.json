@@ -10,7 +10,7 @@
     "export": "slidev export",
     "prepare": "husky install",
     "release": "standard-version",
-    "test": "echo test",
+    "test": "echo \"Error: no test specified\"",
     "commit": "git-cz"
   },
   "dependencies": {
