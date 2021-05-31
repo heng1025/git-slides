@@ -229,13 +229,57 @@ git stash
 
 - [commitlint](https://commitlint.js.org/#/)
 
-![commit message case 3](/commit_4.png)
+![commit message case 4](/commit_4.png)
 
+---
 
+# Git hooks
+
+- [githooks](https://githooks.com/)
+- [husky](https://typicode.github.io/husky/#/)
+
+### 常用的hooks
+
+- `pre-commit` 提交前触发
+- `prepare-commit-msg` 在启动提交信息编辑器运行
+- `commit-msg` 可以用来验证提交信息
+
+### husky 配置hooks
+
+<div v-click class="flex">
+
+```bash
+. "$(dirname "$0")/_/husky.sh"
+
+npm test
+```
+
+<div class="mx-4">
+
+```bash
+. "$(dirname "$0")/_/husky.sh"
+
+exec < /dev/tty && yarn commit --hook || true
+```
+
+</div>
+
+```bash
+. "$(dirname "$0")/_/husky.sh"
+
+npx --no-install commitlint --edit "$1"
+```
+
+</div>
 
 ---
 
 # 生成 CHANGELOG
+
+- [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli)
+- [standard-version](https://github.com/conventional-changelog/standard-version)
+
+<img src="/changelog.png" class="max-h-80 mt-10"/>
 
 ---
 name: 分支管理(一)
