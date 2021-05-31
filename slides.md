@@ -208,7 +208,7 @@ git stash
 
 ```bash
 git reset --hard HEAD^
-git branch -b <branch_name> HEAD^
+git checkout -b <branch_name> <hash> 
 git push origin <branch_name>
 ```
 
