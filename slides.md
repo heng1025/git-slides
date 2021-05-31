@@ -200,13 +200,28 @@ git stash
 
 ---
 
-# lock branch
+# Lock Branch
 
-TODO
+当远程分支设置为保护分支时，而此时你已经直接提交到保护分支了
+
+### 正确操作
+
+```bash
+git reset --hard HEAD^
+git branch -b <branch_name> HEAD^
+git push origin <branch_name>
+```
+
+---
+layout: center
+class: text-center
+---
+
+# Commit message
 
 ---
 
-# Commit message 规范
+# 规范
 
 基本格式
 
@@ -224,7 +239,7 @@ TODO
 
 ---
 
-# Commit message 案例
+# 案例
 
 <div>
 <img v-click class="h-50 mb-10" src="/commit_1.jpeg"/>
@@ -237,7 +252,7 @@ TODO
 
 ---
 
-# Commit message 工具
+# 工具
 
 - [commitizen](http://commitizen.github.io/cz-cli/)
 
