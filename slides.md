@@ -103,9 +103,9 @@ git merge bugFix
 
 <div v-click class="relative">
 
-![merge](/merge_3.jpg)
+<img class="h-84" src="/merge_3.jpg"/>
 
-<div class="absolute top-4 w-60"><div class="inline-flex">
+<div class="absolute top-4 w-54"><div class="inline-flex">
 
 <emojione-warning class="text-xl text-orange-300 animate-ping mx-2"/>
 
@@ -220,6 +220,7 @@ git push origin <branch_name>
 ```
 
 </v-click>
+
 ---
 layout: center
 class: text-center
@@ -233,7 +234,7 @@ class: text-center
 
 基本格式
 
-```
+```bash
 <type>(<scope>): <subject>
 <BLANK LINE>
 <body>
@@ -337,7 +338,7 @@ name: 分支管理（二）
 
 分支管理
 
-<div class="w-80 m-auto"><img src="/branch_2.png"></div>
+<div class="w-72 m-auto"><img src="/branch_2.png"></div>
 
 ---
 name: 分支管理（三）
@@ -372,7 +373,6 @@ name: 分支管理（三）
 ![cr](/cr.png)
 
 ---
-
 # 参考信息
 
 - [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/)
