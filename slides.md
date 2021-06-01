@@ -204,14 +204,22 @@ git stash
 
 当远程分支设置为保护分支时，而此时你已经直接提交到保护分支了
 
+![forbid push](/lock_branch.png)
+
+<v-click>
+
 ### 正确操作
 
 ```bash
+# reset 和远程分支保持一致
 git reset --hard HEAD^
+# 基于上一次提交创建临时分支
 git checkout -b <branch_name> <hash> 
+# 将临时分支推送到远程，然后发起pr
 git push origin <branch_name>
 ```
 
+</v-click>
 ---
 layout: center
 class: text-center
