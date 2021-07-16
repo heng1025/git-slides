@@ -171,6 +171,15 @@ git cherry-pick <branch-name>
 
 ### git rebase -i
 
+<!-- 
+pick: 保留该commit（缩写:p）
+reword: 保留该commit，但我需要修改该commit的注释（缩写:r）
+edit: 修改commit
+squash: 将该commit和前一个commit合并（缩写:s）
+fixup: 将该commit和前一个commit合并，不保留该提交的注释（缩写:f）
+drop: 丢弃该commit（缩写:d）
+ -->
+
 ```bash
 # 修改最近4次提交，包括排序，合并，修改等
 # 修改c3,c4的提交顺序
