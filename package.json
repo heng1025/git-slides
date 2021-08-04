@@ -14,16 +14,15 @@
     "commit": "git-cz"
   },
   "dependencies": {
-    "@slidev/cli": "^0.16.0",
-    "@slidev/theme-default": "*",
+    "@slidev/cli": "^0.22.7",
     "@slidev/theme-seriph": "*"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.1.4",
-    "@commitlint/config-conventional": "^12.1.4",
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "3.3.0",
-    "husky": "^6.0.0",
+    "husky": "^7.0.1",
     "standard-version": "^9.3.0"
   },
   "config": {
