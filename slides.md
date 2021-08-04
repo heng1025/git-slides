@@ -382,8 +382,48 @@ name: 分支管理（三）
 ![cr](/cr.png)
 
 ---
+
+# Github CI (Actions)
+
+<div class="h-420px overflow-y-auto">
+
+```yaml
+name: build iron ui website
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: build app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Build
+        env:
+          PUBLIC_URL: /iron-ui
+        run: |
+          yarn
+          yarn build-storybook          
+      - name: Build and Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: storybook-static # The folder the action should deploy.
+
+```
+
+</div>
+
+---
+
 # 参考信息
 
 - [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/)
 - [git learning](https://learngitbranching.js.org/)
 - [git doc](https://git-scm.com/doc)
+- [GitHub Actions](https://docs.github.com/en/actions)
