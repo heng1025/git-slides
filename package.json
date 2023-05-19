@@ -3,7 +3,7 @@
   "version": "0.1.6",
   "description": "git slides",
   "author": "iron <iron.cheng@qq.com>",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
