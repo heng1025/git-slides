@@ -2,7 +2,7 @@
   "name": "git-ppt",
   "version": "0.1.6",
   "description": "git slides",
-  "author": "iron <472263356@qq.com>",
+  "author": "iron <iron.cheng@qq.com>",
   "license": "ISC",
   "scripts": {
     "dev": "slidev",
@@ -10,20 +10,19 @@
     "export": "slidev export",
     "prepare": "husky install",
     "release": "standard-version",
-    "test": "echo \"Error: no test specified\"",
     "commit": "git-cz"
   },
   "dependencies": {
-    "@slidev/cli": "^0.22.7",
-    "@slidev/theme-seriph": "*"
+    "@slidev/cli": "^0.41.0",
+    "@slidev/theme-seriph": "0.21.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
-    "@commitlint/config-conventional": "^13.1.0",
-    "commitizen": "^4.2.4",
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
+    "commitizen": "^4.3.0",
     "cz-conventional-changelog": "3.3.0",
-    "husky": "^7.0.1",
-    "standard-version": "^9.3.0"
+    "husky": "^8.0.3",
+    "standard-version": "^9.5.0"
   },
   "config": {
     "commitizen": {

@@ -25,10 +25,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps } from "vue";
-
-const props = defineProps({
-  headers: [],
-  commits: [],
-});
+type Commit = {
+  name: string;
+  message: string;
+};
+defineProps<{ headers: string[]; commits: Commit[] }>();
 </script>
