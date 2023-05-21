@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0;URL='/'"></meta>
-    <style>
-      html,
-      body {
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/slidevjs/slidev/assets/favicon.png">
+<link rel="shortcut icon" href="https://git-scm.com/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=PT+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" type="text/css">
+  <script type="module" crossorigin src="/assets/index-fcc4d97b.js"></script>
+  <link rel="stylesheet" href="/assets/index-ddc2e103.css">
+</head>
+<body>
+  <div id="app"></div>
+  
+  
+<script>
+    // http://www.backalleycoder.com/2016/05/13/sghpa-the-single-page-app-hack-for-github-pages/
+    (function () {
+      const redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect != location.href) {
+        history.replaceState(null, null, redirect);
       }
-      .container {
-        display: flex;
-        height: 100%;
-        justify-content: center;
-        align-items: center;
-        color: #999;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">redirect...</div>
-    <script>
-      sessionStorage.redirect = location.href;
-    </script>
-  </body>
+    })();
+  </script>
+</body>
 </html>
