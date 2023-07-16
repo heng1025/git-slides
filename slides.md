@@ -90,7 +90,7 @@ gitGraph
   commit id: "C2"
   checkout main
   commit id: "C3"
-  merge bugFix
+  merge bugFix type: HIGHLIGHT
 ```
 
 </v-click>
@@ -100,6 +100,13 @@ gitGraph
 # git rebase
 
 将**当前分支**添加到**指定分支**的最前面
+
+<div v-click class="inline-flex mb-2">
+  <ph-shield-warning class="text-2xl text-yellow-300 animate-ping mx-2"/> 
+
+> 只对尚未推送或分享给别人的本地修改执行**rebase**清理历史， 从不对已推送至别处的提交执行**rebase**
+
+</div>
 
 <v-click>
 
@@ -124,17 +131,10 @@ gitGraph
   commit id: "C2"
   checkout main
   commit id: "C3 (main)"
-  commit id: "C2' (bugFix)"
+  commit id: "C2' (bugFix)" type: HIGHLIGHT
 ```
 
 </v-click>
-
-<div v-click class="inline-flex">
-  <ph-shield-warning class="text-2xl text-yellow-300 animate-ping mx-2"/> 
-
-> 只对尚未推送或分享给别人的本地修改执行**rebase**清理历史， 从不对已推送至别处的提交执行**rebase**
-
-</div>
 
 ---
 layout: center
@@ -166,19 +166,28 @@ name: 撤销变更（一）
 变更本地,只是修改了历史提交记录
 
 ```bash
-# 切换到local分支
-git switch local
-# 回滚至上一次提交，本次修改保存在工作区
-git reset HEAD^
+git switch local # 切换到local分支
+git reset HEAD^ # 回滚至上一次提交，本次修改保存在工作区
 ```
 
 ```mermaid
 gitGraph
   commit id: "C0"
-  commit id: "C1(main,local)"
+  commit id: "C1(main,local)" type: HIGHLIGHT
   checkout main
   commit id: "C2(pushed)"
   branch local
+```
+
+[前进和后退](https://github.blog/2015-06-08-how-to-undo-almost-anything-with-git/#redo-after-undo-local)
+
+```
+git reflog  # 查看操作记录
+git reset HEAD@{num} # 回到指定的位置
+
+# 操作记录信息
+707153e (HEAD -> main, ...) HEAD@{0}: C1
+8db3b3b HEAD@{1}: C0
 ```
 
 ::right::
@@ -188,12 +197,9 @@ gitGraph
 变更远程，生成新的提交记录，不改变提交历史记录
 
 ```bash
-# 切换到main分支
-git switch main
-# 同步远程
-git pull
-# 撤销上一次提交，并生成新的提交
-git revert HEAD
+git switch main # 切换到main分支
+git pull # 同步远程
+git revert HEAD # 撤销上一次提交，并生成新的提交
 ```
 
 ```mermaid
@@ -202,7 +208,7 @@ gitGraph
   commit id: "C1"
   checkout main
   commit id: "C2(pushed)"
-  commit id: "Revert C2"
+  commit id: "Revert C2" type: REVERSE
 ```
 
 ---
@@ -213,11 +219,12 @@ name: 撤销变更（二）
 
 | 命令   | 特点   | 建议   |
 | :----- | :---- | :---- |
-| git checkout -- 文件  | 回滚本地工作区未暂存的改动，<br>被丢弃的内容不可恢复 | 操作前务必确认要回滚的改动时不再需要的 |
+| git checkout \-\- 文件  | 回滚本地工作区未暂存的改动，<br>被丢弃的内容不可恢复 | 操作前务必确认要回滚的改动时不再需要的 |
 | git reset HEAD 文件   | 滚动暂存区的文件改动 | 一般不加 --hard 选项 |
-| git reset [commit]   | 回滚到目标commit，<br> 丢弃该 commit 之后的提交记录，<br> 将被丢弃记录所做的改动保留在工作区 | 1. 只操作本地记录，禁止操作已push的记录 <br> 2. 慎用 --hard 选项 |
+| git reset \<commit\> <br> git reset HEAD^ <br> git reset HEAD~num  | 回滚到目标commit，<br> 丢弃该 commit 之后的提交记录，<br> 将被丢弃记录所做的改动保留在工作区 | 1. 只操作本地记录，禁止操作已push的记录 <br> 2. 慎用 --hard 选项 |
+| git reset HEAD@{num} | 回到某个操作时刻，num可以通过操作记录查看，<br>即`git reflog`结果 |  1. 只操作本地记录，禁止操作已push的记录 <br> 2. 慎用 --hard 选项 |
 | git commit --amend   | 修改最后一次commit的内容和提交日志 | 只操作本地记录，禁止操作已push的记录 |
-| git revert [commit]  | 回滚相关commit所做的改动，<br> 再次提交将生成新的commit，<br>历史提交记录不受影响 | 已push的内容如果要回滚只能使用revert |
+| git revert \<commit\>  | 回滚相关commit所做的改动，<br> 再次提交将生成新的commit，<br>历史提交记录不受影响 | 已push的内容如果要回滚只能使用revert |
 
 ---
 layout: center
@@ -234,14 +241,18 @@ name: 修改任意提交 git cherry-pick
 ---
 
 # 修改任意提交
- git cherry-pick
+
+git cherry-pick 它常用于将部分变动（某几个commit）应用到指定分支上
 
 ```bash
 # 将指定的提交应用到当前分支
 git cherry-pick <commitHash> [<commitHash> ...]
 
-# 将连续的提交应用到当前分支,commitA必须在commitB之前
+# 将commitA到commitB的所有提交应用到当前分支
 git cherry-pick commitA..commitB
+
+# 将commitA到commitB的所有提交应用到当前分支,但不包含commitA
+git cherry-pick commitA^..commitB
 
 # 将指定分支的最近一次提交应用到当前分支
 git cherry-pick <branch-name>
@@ -277,7 +288,7 @@ gitGraph
   commit id: "C3"
   checkout main
   commit id: "C4"
-  commit id: "C2'(*)"
+  commit id: "C2'(*)" type: HIGHLIGHT
 ```
 
 </v-click>
@@ -289,8 +300,8 @@ name: 修改任意提交 git rebase -i
 
 # 修改任意提交
 
-git rebase -i （-i表示在命令行以交互式的方式操作），一般用于将提交记录整理成**线性**，避免蛇形分支图，
-常用于对交记录进行修改，合并，重新排序等操作
+git rebase -i （-i表示在命令行以交互式的方式操作），它一般用于将提交记录整理成***线性***，
+避免***蛇形***分支图，常用于对交记录进行修改，合并，重新排序等操作
 
 常用的commit修改指令说明
 
@@ -317,7 +328,7 @@ gitGraph
   commit id: "C4"
 ```
 
-执行 `git rebase -i HEAD~2`,显示互动界面如下：
+执行 `git rebase -i HEAD~2`，显示互动界面：
 
 <v-click>
 
@@ -336,14 +347,14 @@ f 8ed7e08 C4
 
 <v-click>
 
-最终效果如下：
+最终效果：
 
 ```mermaid
 gitGraph
   commit id: "C0"
   commit id: "C1"
   commit id: "C2"
-  commit id: "C3'"
+  commit id: "C3'" type: HIGHLIGHT
 ```
 </v-click>
 
