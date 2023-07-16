@@ -364,12 +364,14 @@ gitGraph
 
 git stash
 
-- `git stash [message]` 保存
-- `git stash list` 查看保存记录
-- `git stash pop [stash@{num}]` 恢复一次
-- `git stash apply [stash@{num}]` 恢复多次
-- `git stash drop [stash@{num}]` 删除指定的保存记录
-- `git stash clear` 删除所有的记录
+```bash
+git stash [message] #保存
+git stash list #查看保存记录
+git stash pop [stash@{num}] #恢复一次
+git stash apply [stash@{num}] #恢复多次
+git stash drop [stash@{num}] #删除指定的保存记录
+git stash clear #删除所有的记录
+```
 
 ---
 
@@ -400,14 +402,18 @@ class: text-center
 ---
 
 # Commit message
+提交信息指南
 
+---
+layout: two-cols
+name: commit message desc
 ---
 
 # 规范
 
 基本格式
 
-```bash
+```
 <type>(<scope>): <subject>
 <BLANK LINE>
 <body>
@@ -415,9 +421,30 @@ class: text-center
 <footer>
 ```
 
-### 字段说明
+字段说明
 
-<CommitMessage/>
+| 字段    | 描述 |
+| ------  | --- |
+| Scope   |修改的影响范围（可选）|
+| Subject | commit的简洁描述，以动词开头，<br>第一个子母小写，结尾不加(.) |
+| Body    |应该说明代码变动的动机，以及与以前行为的对比 |
+| Footer  |主要说明 Breaking Changes和相关的issue |
+| Revert  |当前 commit 用于撤销以前的 commit，则必须以`revert:`开头，后面跟着被撤销 Commit 的 Header,Body写成This reverts commit \<hash\> |
+
+::right::
+
+type 说明
+
+| type     | 描述   |  
+| -----    | ----- |
+| feat     |添加新功能 |
+| fix      | 修复bug |
+| docs     |文档修改 |
+| style    |不影响代码运行的修改，包括空白符处理，格式化等 |
+| refactor |重构（既不是添加新功能，也不是代码的修改）|
+| perf     |改善性能的改变 |
+| test     |添加或者修改测试 |
+| chore    |辅助工具的修改，包括构建工具，CI等 |
 
 ---
 
@@ -497,6 +524,7 @@ npx --no-install commitlint --edit "$1"
 ---
 name: 分支管理（一）
 ---
+
 # Git Flow
 
 分支管理
