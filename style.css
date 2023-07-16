@@ -1,0 +1,9 @@
+.two-columns {
+  grid-gap: 10px;
+}
+.mermaid {
+  margin: 12px auto;
+}
+.slidev-layout td, .slidev-layout th {
+  border: 1px solid #ccc;
+}

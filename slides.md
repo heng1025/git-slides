@@ -9,12 +9,14 @@ background: https://source.unsplash.com/collection/94734566/1920x1080
 class: "text-center"
 # https://sli.dev/custom/highlighters.html
 highlighter: shiki
+drawings: 
+  enabled: dev
 # some information about the slides, markdown enabled
 info: |
-  ## 代码管理及集成
+  ## 代码管理及集成(Git)
 ---
 
-# 代码管理及集成
+# 代码管理及集成(Git)
 
 ---
 
@@ -22,20 +24,29 @@ info: |
 
 基本操作
 
-<div class="flex justify-center" v-click>
-  <img src="/git_action.jpg"/> 
-</div>
+```mermaid
+flowchart LR
+  classDef bluebg fill:#add8e6,color:#333,stroke:#333
+  classDef orangeBg fill:#eded61,color:#333,stroke:#333
+  Remote[(Remote)]:::bluebg --fetch/clone-->Repository[(Repository)]:::bluebg
+  Remote --pull--> workspace>Workspace]:::orangeBg
+  Repository --push--> Remote
+  subgraph local
+      Repository --checkout--> workspace
+      workspace --add--> Index:::bluebg
+      Index --commit-->Repository
+  end
+```
 
 ---
 
 # 常用操作
 
-- git cherry-pick
-- git rebase
-- git merge
-- git stash
-- git revert
-- git reset
+- 分支合并
+- 撤销变更
+- 暂存操作
+- PR 操作
+- 分支管理
 
 ---
 layout: center
@@ -44,25 +55,30 @@ class: text-center
 
 # 分支合并
 
-git merge/rebase
+初始状态
 
-![merge](/merge_1.jpg)
+```mermaid
+gitGraph
+  commit id: "C0"
+  commit id: "C1"
+  branch bugFix
+  commit id: "C2"
+  checkout main
+  commit id: "C3"
+```
 
 ---
-name: 合并操作比较
+layout: two-cols
+name: 分支合并操作比较
 ---
-
-<div class="grid grid-cols-2 gap-x-8">
-
-<div>
 
 # git merge
 
-将**指定分支**合并到**当前**分支
+git merge: 将**指定分支**合并到**当前**分支
 
 <v-click>
 
-```sh
+```bash
 git checkout main
 git merge bugFix
 ```
@@ -71,80 +87,130 @@ git merge bugFix
 
 <v-click>
 
-![merge](/merge_2.jpg)
+```mermaid
+gitGraph
+  commit id: "C0"
+  commit id: "C1"
+  branch bugFix
+  commit id: "C2"
+  checkout main
+  commit id: "C3"
+  merge bugFix
+```
 
 </v-click>
 
-</div>
-<div>
+::right::
 
 # git rebase
 
 将**当前分支**添加到**指定分支**的最前面
 
-<div class="flex justify-start">
-<div v-click class="mr-8">
+<v-click>
 
-```sh
+```bash
+# 第一步
 git checkout bugFix
 git rebase main
-```
-
-</div>
-<div v-click>
-
-```sh
+# 第二步
 git checkout main
 git merge bugFix
 ```
 
-</div>
-</div>
+</v-click>
 
-<div v-click class="relative">
+<v-click class="mt-10">
 
-<img class="h-84" src="/merge_3.jpg"/>
+```mermaid
+gitGraph
+  commit id: "C0"
+  commit id: "C1"
+  branch bugFix
+  commit id: "C2"
+  checkout main
+  commit id: "C3 (main)"
+  commit id: "C2' (bugFix)"
+```
 
-<div class="absolute top-4 w-54"><div class="inline-flex">
+</v-click>
 
-<i class="text-xl text-orange-300 animate-ping mx-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64"><path fill="#ffce31" d="M5.9 62c-3.3 0-4.8-2.4-3.3-5.3L29.3 4.2c1.5-2.9 3.9-2.9 5.4 0l26.7 52.5c1.5 2.9 0 5.3-3.3 5.3H5.9z"/><g fill="#231f20"><path d="m27.8 23.6l2.8 18.5c.3 1.8 2.6 1.8 2.9 0l2.7-18.5c.5-7.2-8.9-7.2-8.4 0"/><circle cx="32" cy="49.6" r="4.2"/></g></svg>
-</i>
+<div v-click class="inline-flex">
+  <ph-shield-warning class="text-2xl text-yellow-300 animate-ping mx-2"/> 
 
 > 只对尚未推送或分享给别人的本地修改执行**rebase**清理历史， 从不对已推送至别处的提交执行**rebase**
 
 </div>
-</div>
-</div>
-</div>
-</div>
 
 ---
-name: 撤销变更（一）
+layout: center
+class: text-center
 ---
 
 # 撤销变更
 
-git revert/reset 区别
+初始状态
+
+```mermaid
+gitGraph
+  commit id: "C0"
+  commit id: "C1"
+  branch local
+  commit id: "C3"
+  checkout main
+  commit id: "C2(pushed)"
+  checkout local
+```
+
+---
+layout: two-cols
+name: 撤销变更（一）
+---
+
+# git reset
 
 ```bash
 git reset HEAD^ # 变更本地,只是修改了历史提交记录
+```
+
+```mermaid
+gitGraph
+  commit id: "C0"
+  commit id: "C1(main,local)"
+  checkout main
+  commit id: "C2(pushed)"
+  branch local
+```
+
+::right::
+
+# git revert
+
+```bash
 git revert HEAD # 变更远程
 ```
 
-<div class="flex mt-4">
-  <div class="mr-4" v-click><img src="/reset_1.png"></div>
-  <div v-click><img src="/reset_2.png"></div>
-</div>
+```mermaid
+gitGraph
+  commit id: "C0"
+  commit id: "C1"
+  checkout main
+  commit id: "C2(pushed)"
+  commit id: "Revert C2"
+```
 
 ---
 name: 撤销变更（二）
 ---
 
-# 撤销变更
+# 撤销变更详细说明
 
-![regret](/reset_3.png)
-
+| 命令   | 特点   | 建议   |
+| :----- | :---- | :---- |
+| git checkout -- 文件  | 回滚本地工作区未暂存的改动，<br>被丢弃的内容不可恢复 | 操作前务必确认要回滚的改动时不再需要的 |
+| git reset HEAD 文件   | 滚动暂存区的文件改动 | 一般不加 --hard 选项 |
+| git reset [commit]   | 回滚到目标commit，<br> 丢弃该 commit 之后的提交记录，<br> 将被丢弃记录所做的改动保留在工作区 | 1. 只操作本地记录，禁止操作已push的记录 <br> 2. 慎用 --hard 选项 |
+| git commit --amend   | 修改最后一次commit的内容和提交日志 | 只操作本地记录，禁止操作已push的记录 |
+| git revert [commit]  | 回滚相关commit所做的改动，<br> 再次提交将生成新的commit，<br>历史提交记录不受影响 | 已push的内容如果要回滚只能使用revert |
 ---
 
 # 任意修改提交记录
