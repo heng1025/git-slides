@@ -1,17 +1,11 @@
 ---
-# try also 'default' to start simple
 theme: seriph
 title: 代码管理及集成 (基本Git)
-# random image from a curated Unsplash collection by Anthony
-# like theme? see https://unsplash.com/collections/94734566/slidev
 background: https://source.unsplash.com/collection/94734566/1920x1080
-# apply any windi css classes to the current slide
 class: "text-center"
-# https://sli.dev/custom/highlighters.html
 highlighter: shiki
 drawings: 
   enabled: dev
-# some information about the slides, markdown enabled
 info: |
   ## 代码管理及集成(Git)
 ---
@@ -44,6 +38,7 @@ flowchart LR
 
 - 分支合并
 - 撤销变更
+- 修改任意提交
 - 暂存操作
 - PR 操作
 - 分支管理
@@ -74,7 +69,7 @@ name: 分支合并操作比较
 
 # git merge
 
-git merge: 将**指定分支**合并到**当前**分支
+将**指定分支**合并到**当前**分支
 
 <v-click>
 
@@ -119,7 +114,7 @@ git merge bugFix
 
 </v-click>
 
-<v-click class="mt-10">
+<v-click>
 
 ```mermaid
 gitGraph
@@ -168,8 +163,13 @@ name: 撤销变更（一）
 
 # git reset
 
+变更本地,只是修改了历史提交记录
+
 ```bash
-git reset HEAD^ # 变更本地,只是修改了历史提交记录
+# 切换到local分支
+git switch local
+# 回滚至上一次提交，本次修改保存在工作区
+git reset HEAD^
 ```
 
 ```mermaid
@@ -185,8 +185,15 @@ gitGraph
 
 # git revert
 
+变更远程，生成新的提交记录，不改变提交历史记录
+
 ```bash
-git revert HEAD # 变更远程
+# 切换到main分支
+git switch main
+# 同步远程
+git pull
+# 撤销上一次提交，并生成新的提交
+git revert HEAD
 ```
 
 ```mermaid
@@ -211,60 +218,138 @@ name: 撤销变更（二）
 | git reset [commit]   | 回滚到目标commit，<br> 丢弃该 commit 之后的提交记录，<br> 将被丢弃记录所做的改动保留在工作区 | 1. 只操作本地记录，禁止操作已push的记录 <br> 2. 慎用 --hard 选项 |
 | git commit --amend   | 修改最后一次commit的内容和提交日志 | 只操作本地记录，禁止操作已push的记录 |
 | git revert [commit]  | 回滚相关commit所做的改动，<br> 再次提交将生成新的commit，<br>历史提交记录不受影响 | 已push的内容如果要回滚只能使用revert |
+
+---
+layout: center
+class: text-center
 ---
 
-# 任意修改提交记录
+# 修改任意提交
 
-<div class="grid grid-cols-2 gap-x-8">
+git cherry-pick / git rebase -i
 
-<div>
+---
+layout: two-cols
+name: 修改任意提交 git cherry-pick
+---
 
-### cherry-pick
+# 修改任意提交
+ git cherry-pick
 
 ```bash
 # 将指定的提交应用到当前分支
 git cherry-pick <commitHash> [<commitHash> ...]
+
+# 将连续的提交应用到当前分支,commitA必须在commitB之前
+git cherry-pick commitA..commitB
+
 # 将指定分支的最近一次提交应用到当前分支
 git cherry-pick <branch-name>
 ```
 
-<div class="flex mt-4">
-  <div class="mr-4 w-60" v-click><img src="/cherry_pick_1.png"></div>
-  <div v-click class="w-50"><img src="/cherry_pick_2.png"></div>
-</div>
+::right::
 
-</div>
+#### 案例-将某次提交应用到main分支
 
-<div>
+初始状态
 
-### git rebase -i
-
-<!-- 
-pick: 保留该commit（缩写:p）
-reword: 保留该commit，但我需要修改该commit的注释（缩写:r）
-edit: 修改commit
-squash: 将该commit和前一个commit合并（缩写:s）
-fixup: 将该commit和前一个commit合并，不保留该提交的注释（缩写:f）
-drop: 丢弃该commit（缩写:d）
- -->
-
-```bash
-# 修改最近4次提交，包括排序，合并，修改等
-# 修改c3,c4的提交顺序
-git rebase -i HEAD~4
+```mermaid
+gitGraph
+  commit id: "C0"
+  commit id: "C1"
+  branch side
+  commit id: "C2"
+  commit id: "C3"
+  checkout main
+  commit id: "C4(*)"
 ```
 
-<div class="flex mt-4">
-  <div class="mr-4 w-32" v-click><img src="/rebase_i_1.png"></div>
-  <div v-click class="w-50"><img src="/rebase_i_2.png"></div>
-</div>
+在`main`分支执行 `git cherry-pick C2`，则：
 
-</div>
-</div>
+<v-click>
+
+```mermaid
+gitGraph
+  commit id: "C0"
+  commit id: "C1"
+  branch side
+  commit id: "C2"
+  commit id: "C3"
+  checkout main
+  commit id: "C4"
+  commit id: "C2'(*)"
+```
+
+</v-click>
+
+---
+layout: two-cols
+name: 修改任意提交 git rebase -i
+---
+
+# 修改任意提交
+
+git rebase -i （-i表示在命令行以交互式的方式操作），一般用于将提交记录整理成**线性**，避免蛇形分支图，
+常用于对交记录进行修改，合并，重新排序等操作
+
+常用的commit修改指令说明
+
+```
+p, pick   保留该commit 
+r, reword 保留该commit，并修改该提交信息 
+e, edit   保留该commit，并允许修改该commit 
+s, squash 将该commit和前一个commit合并 
+f, fixup  将该commit和前一个commit合并,但不保留该提交信息 
+d, drop   丢弃该commit
+```
+
+::right::
+
+#### 案例-合并最后三次提交并修改提交信息
+初始状态
+
+```mermaid
+gitGraph
+  commit id: "C0"
+  commit id: "C1"
+  commit id: "C2"
+  commit id: "C3"
+  commit id: "C4"
+```
+
+执行 `git rebase -i HEAD~2`,显示互动界面如下：
+
+<v-click>
+
+```
+r e9ca05d C3
+f 8ed7e08 C4
+
+# Rebase 2173218..8ed7e08 onto 2173218 (2 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# ...
+```
+
+</v-click>
+
+<v-click>
+
+最终效果如下：
+
+```mermaid
+gitGraph
+  commit id: "C0"
+  commit id: "C1"
+  commit id: "C2"
+  commit id: "C3'"
+```
+</v-click>
 
 ---
 
-# 临时保持修改及恢复修改
+# 暂存操作
 
 git stash
 
