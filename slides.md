@@ -527,13 +527,20 @@ npx --no-install commitlint --edit "$1"
 ```
 
 ---
+layout: center
+---
 
 # 生成 CHANGELOG
 
 - [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli)
 - [standard-version](https://github.com/conventional-changelog/standard-version)
 
-<img src="/changelog.png" class="max-h-80 mt-10"/>
+
+---
+class: text-xs
+src: ./CHANGELOG.md
+---
+
 
 ---
 name: 分支管理（一）
