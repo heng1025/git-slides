@@ -40,8 +40,9 @@ flowchart LR
 - 撤销变更
 - 修改任意提交
 - 暂存操作
-- PR 操作
+- 提交信息说明
 - 分支管理
+- PR 操作
 
 ---
 layout: center
@@ -374,33 +375,11 @@ git stash clear #删除所有的记录
 ```
 
 ---
-
-# Lock Branch
-
-当远程分支设置为保护分支时，而此时你已经直接提交到保护分支了
-
-![forbid push](/lock_branch.png)
-
-<v-click>
-
-### 正确操作
-
-```bash
-# reset 和远程分支保持一致
-git reset --hard HEAD^
-# 基于上一次提交创建临时分支
-git checkout -b <branch_name> <hash> 
-# 将临时分支推送到远程，然后发起pr
-git push origin <branch_name>
-```
-
-</v-click>
-
----
 layout: center
 ---
 
 # Commit message
+
 提交信息指南
 
 ```
@@ -416,9 +395,9 @@ layout: two-cols
 name: commit message desc
 ---
 
-# 格式说明
+# Commit message 
 
-字段说明
+格式说明
 
 | 字段    | 描述 |
 | ------  | --- |
@@ -445,69 +424,107 @@ type 说明
 
 ---
 
-# 案例
+# Commit message
 
-<div>
-<img v-click class="h-50 mb-10" src="/commit_1.jpeg"/>
-  <div class="flex">
-    <img v-click class="h-30 mr-10" src="/commit_2.jpeg"/>
-    <img v-click class="h-30" src="/commit_3.jpeg"/>
-  </div>
-</div>
+[案例](https://github.com/angular/angular)
 
+```
+fix(animations): Ensure elements are removed from the cache after leave animation. (#50929)
+perf(platform-browser): do not remove renderer from cache when `REMOVE_STYLES_ON_COMPONENT_DESTROY` is enabled.
+feat(common): Allow ngSrc to be changed post-init (#50683)
+test(core): update runtime error list to include deps tracker error (#50980)
+build: update dependency lighthouse-logger to v2 (#51075) 
+refactor(compiler): introduce deferred block AST (#51050) 
+docs: add privacy policy link at the bottom of the page (#51013) 
+ci: migrate devtools tests to GHA (#51008) 
+Revert "fix(zone.js): enable monkey patching of the `queueMicrotask()` API in node.js (#50467)" (#50529)
+```
+
+详细信息
+
+```
+fix(animations): Ensure elements are removed from the cache after leave animation. (#50929)
+
+This commit fixes a memory leak.
+
+`_namespaceLookup` was cleared before the call to `processLeaveNode()` which was using the lookup.
+Without that lookup `clearElementCache()` wasn't called thus keeping a reference to the element.
+
+Fixes #24197 & #50533
+
+PR Close #50929
+```
 
 ---
 
-# 工具
+# Commit message 
 
-- [commitizen](http://commitizen.github.io/cz-cli/)
+[工具(commitizen)](http://commitizen.github.io/cz-cli/)
 
-![commit message case 3](/commit_3.png)
+```
+$ git-cz
+cz-cli@4.3.0, cz-conventional-changelog@3.3.0
 
-- [commitlint](https://commitlint.js.org/#/)
+? Select the type of change that you're committing: (Use arrow keys)
+❯ feat:     A new feature 
+  fix:      A bug fix 
+  docs:     Documentation only changes 
+  style:    Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc) 
+  refactor: A code change that neither fixes a bug nor adds a feature 
+  perf:     A code change that improves performance 
+  test:     Adding missing tests or correcting existing tests
+  refactor: A code change that neither fixes a bug nor adds a feature 
+  perf:     A code change that improves performance 
+  test:     Adding missing tests or correcting existing tests 
+  build:    Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm) 
+  ci:       Changes to our CI configuration files and scripts (example scopes: Travis, Circle, SauceLabs) 
+  chore:    Other changes that don't modify src or test files 
+  revert:   Reverts a previous commit 
+(Move up and down to reveal more choices)
+```
 
-![commit message case 4](/commit_4.png)
+--- 
+
+# Commit message 
+
+[工具 (commitlint)](https://commitlint.js.org/#/)
+
+```
+$ git commit -m "change commit message position"  
+⧗   input: change commit message position
+✖   subject may not be empty [subject-empty]
+✖   type may not be empty [type-empty]
+
+✖   found 2 problems, 0 warnings
+ⓘ   Get help: https://github.com/conventional-changelog/commitlint/#what-is-commitlint
+
+husky - commit-msg hook exited with code 1 (error)
+```
 
 ---
 
-# Git hooks
+# [Git hooks](https://githooks.com/) 配置 (基于 [husky](https://typicode.github.io/husky))
 
-- [githooks](https://githooks.com/)
-- [husky](https://typicode.github.io/husky/#/)
-
-### 常用的hooks
-
-- `pre-commit` 提交前触发
-- `prepare-commit-msg` 在启动提交信息编辑器运行
-- `commit-msg` 可以用来验证提交信息
-
-### husky 配置hooks
-
-<div v-click class="flex">
-
+- 提交前触发 `pre-commit`
 ```bash
 . "$(dirname "$0")/_/husky.sh"
 
 npm test
 ```
 
-<div class="mx-4">
-
+- 在启动提交信息编辑器运行 `prepare-commit-msg`
 ```bash
 . "$(dirname "$0")/_/husky.sh"
 
 exec < /dev/tty && yarn commit --hook || true
 ```
 
-</div>
-
+- 验证提交信息 `commit-msg`
 ```bash
 . "$(dirname "$0")/_/husky.sh"
 
 npx --no-install commitlint --edit "$1"
 ```
-
-</div>
 
 ---
 
@@ -547,6 +564,29 @@ name: 分支管理（三）
 分支管理
 
 <div class="w-150 m-auto"><img src="/branch_3.png"></div>
+
+---
+
+# Lock Branch
+
+当远程分支设置为保护分支时，而此时你已经直接提交到保护分支了
+
+![forbid push](/lock_branch.png)
+
+<v-click>
+
+### 正确操作
+
+```bash
+# reset 和远程分支保持一致
+git reset --hard HEAD^
+# 基于上一次提交创建临时分支
+git checkout -b <branch_name> <hash> 
+# 将临时分支推送到远程，然后发起pr
+git push origin <branch_name>
+```
+
+</v-click>
 
 ---
 
