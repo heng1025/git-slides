@@ -316,7 +316,7 @@ d, drop   丢弃该commit
 
 ::right::
 
-#### 案例-合并最后三次提交并修改提交信息
+#### 案例-合并最后2次提交并修改提交信息
 初始状态
 
 ```mermaid
@@ -398,20 +398,10 @@ git push origin <branch_name>
 
 ---
 layout: center
-class: text-center
 ---
 
 # Commit message
 提交信息指南
-
----
-layout: two-cols
-name: commit message desc
----
-
-# 规范
-
-基本格式
 
 ```
 <type>(<scope>): <subject>
@@ -420,6 +410,13 @@ name: commit message desc
 <BLANK LINE>
 <footer>
 ```
+
+---
+layout: two-cols
+name: commit message desc
+---
+
+# 格式说明
 
 字段说明
 
