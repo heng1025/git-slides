@@ -21,9 +21,9 @@ info: |
 ```mermaid
 flowchart LR
   classDef bluebg fill:#add8e6,color:#333,stroke:#333
-  classDef orangeBg fill:#eded61,color:#333,stroke:#333
+  classDef yellowBg fill:#eded61,color:#333,stroke:#333
   Remote[(Remote)]:::bluebg --fetch/clone-->Repository[(Repository)]:::bluebg
-  Remote --pull--> workspace>Workspace]:::orangeBg
+  Remote --pull--> workspace>Workspace]:::yellowBg
   Repository --push--> Remote
   subgraph local
       Repository --checkout--> workspace
@@ -111,7 +111,7 @@ gitGraph
 
 <v-click>
 
-```bash
+```bash {2,3}
 # 第一步
 git checkout bugFix
 git rebase main
@@ -333,7 +333,7 @@ gitGraph
 
 <v-click>
 
-```
+```text {1,2}
 r e9ca05d C3
 f 8ed7e08 C4
 
@@ -428,7 +428,7 @@ type 说明
 
 [案例](https://github.com/angular/angular)
 
-```
+```text {1}
 fix(animations): Ensure elements are removed from the cache after leave animation. (#50929)
 perf(platform-browser): do not remove renderer from cache when `REMOVE_STYLES_ON_COMPONENT_DESTROY` is enabled.
 feat(common): Allow ngSrc to be changed post-init (#50683)
@@ -473,9 +473,6 @@ cz-cli@4.3.0, cz-conventional-changelog@3.3.0
   refactor: A code change that neither fixes a bug nor adds a feature 
   perf:     A code change that improves performance 
   test:     Adding missing tests or correcting existing tests
-  refactor: A code change that neither fixes a bug nor adds a feature 
-  perf:     A code change that improves performance 
-  test:     Adding missing tests or correcting existing tests 
   build:    Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm) 
   ci:       Changes to our CI configuration files and scripts (example scopes: Travis, Circle, SauceLabs) 
   chore:    Other changes that don't modify src or test files 
@@ -489,7 +486,7 @@ cz-cli@4.3.0, cz-conventional-changelog@3.3.0
 
 [工具 (commitlint)](https://commitlint.js.org/#/)
 
-```
+```text {1}
 $ git commit -m "change commit message position"  
 ⧗   input: change commit message position
 ✖   subject may not be empty [subject-empty]
@@ -503,7 +500,9 @@ husky - commit-msg hook exited with code 1 (error)
 
 ---
 
-# [Git hooks](https://githooks.com/) 配置 (基于 [husky](https://typicode.github.io/husky))
+# [Git hooks](https://githooks.com/) 配置
+
+基于 [husky](https://typicode.github.io/husky)
 
 - 提交前触发 `pre-commit`
 ```bash
@@ -513,14 +512,14 @@ npm test
 ```
 
 - 在启动提交信息编辑器运行 `prepare-commit-msg`
-```bash
+```bash {3}
 . "$(dirname "$0")/_/husky.sh"
 
 exec < /dev/tty && yarn commit --hook || true
 ```
 
 - 验证提交信息 `commit-msg`
-```bash
+```bash {3}
 . "$(dirname "$0")/_/husky.sh"
 
 npx --no-install commitlint --edit "$1"
@@ -535,7 +534,6 @@ layout: center
 - [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli)
 - [standard-version](https://github.com/conventional-changelog/standard-version)
 
-
 ---
 class: text-xs
 src: ./CHANGELOG.md
@@ -543,6 +541,7 @@ src: ./CHANGELOG.md
 
 
 ---
+layout: two-cols
 name: 分支管理（一）
 ---
 
@@ -550,27 +549,15 @@ name: 分支管理（一）
 
 分支管理
 
-<div class="w-150 m-auto"><img src="/branch_1.png"></div>
+<img class="w-72 m-auto" src="/branch_2.png">
 
----
-name: 分支管理（二）
----
+::right::
 
-# Git Flow
+- 主干优先策略
+![trunk first](/branch_1.png)
 
-分支管理
-
-<div class="w-72 m-auto"><img src="/branch_2.png"></div>
-
----
-name: 分支管理（三）
----
-
-# Git Flow
-
-分支管理
-
-<div class="w-150 m-auto"><img src="/branch_3.png"></div>
+- 分支优先策略
+![trunk first](/branch_3.png)
 
 ---
 
@@ -597,16 +584,24 @@ git push origin <branch_name>
 
 ---
 
-# Pull Request
+# Pull Requests
 
 > Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
 
-无论采用哪种Git Flow，最佳的做法是仓库管理员已经将**master分支**设置为**保护分支**，开发人员应创建临时分支，完成后向**master分支**发起 pull request，
+无论采用哪种Git Flow，最佳的做法是仓库管理员已经将**主分支（master/main）**设置为**保护分支**，开发人员应创建临时分支，完成后向**主分支**发起 Pull Requests，
 代码通过CI(检查代码是否符合编写规范，commit message是否遵守约定等等)和代码评审后合并进主分支（同时删除临时分支）。
 
 ### 大致的流程
 
-![pr](/pr.png)
+```mermaid
+flowchart LR
+  classDef bluebg fill:#79d1ef,color:#333,stroke:#51b4ef,stroke-width:3px
+  classDef orangeBg fill:#faa65e,color:#333,stroke:#f59344,stroke-width:3px
+  classDef purpleBg fill:#c698c8,color:#333,stroke:#a678a3
+
+  PersonA[(Git Repo)]:::bluebg --- feature(feature):::bluebg --> PR((Pull Requests)):::purpleBg
+  PR --> master(master):::orangeBg --- PersonB[(Git Repo)]:::orangeBg
+```
 
 ---
 
