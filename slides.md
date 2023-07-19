@@ -429,10 +429,9 @@ type 说明
 [案例](https://github.com/angular/angular)
 
 ```text {1}
-fix(animations): Ensure elements are removed from the cache after leave animation. (#50929)
+fix(core): handle `deref` returning `null` on `RefactiveNode`. (#50992)
 perf(platform-browser): do not remove renderer from cache when `REMOVE_STYLES_ON_COMPONENT_DESTROY` is enabled.
 feat(common): Allow ngSrc to be changed post-init (#50683)
-test(core): update runtime error list to include deps tracker error (#50980)
 build: update dependency lighthouse-logger to v2 (#51075) 
 refactor(compiler): introduce deferred block AST (#51050) 
 docs: add privacy policy link at the bottom of the page (#51013) 
@@ -443,16 +442,13 @@ Revert "fix(zone.js): enable monkey patching of the `queueMicrotask()` API in no
 详细信息
 
 ```
-fix(animations): Ensure elements are removed from the cache after leave animation. (#50929)
+fix(core): handle `deref` returning `null` on `RefactiveNode`. (#50992)
 
-This commit fixes a memory leak.
+On Safari <16.1 there is a bug where `deref` can return `null`.
 
-`_namespaceLookup` was cleared before the call to `processLeaveNode()` which was using the lookup.
-Without that lookup `clearElementCache()` wasn't called thus keeping a reference to the element.
+Fixes #50989
 
-Fixes #24197 & #50533
-
-PR Close #50929
+PR Close #50992
 ```
 
 ---
@@ -565,19 +561,30 @@ name: 分支管理（一）
 
 当远程分支设置为保护分支时，而此时你已经直接提交到保护分支了
 
-![forbid push](/lock_branch.png)
+```text {9-13}
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 302 bytes | 302.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+remote: error: GH006: Protected branch update failed for refs/heads/main.
+remote: error: Changes must be made through a pull request. Cannot change this locked branch
+To https://github.com/heng1025/git-slides.git
+ ! [remote rejected] main -> main (protected branch hook declined)
+error: failed to push some refs to 'https://github.com/heng1025/git-slides.git'
+```
 
 <v-click>
 
 ### 正确操作
 
 ```bash
-# reset 和远程分支保持一致
-git reset --hard HEAD^
-# 基于上一次提交创建临时分支
-git checkout -b <branch_name> <hash> 
-# 将临时分支推送到远程，然后发起pr
-git push origin <branch_name>
+git reset --hard HEAD^ # reset 和远程分支保持一致
+git checkout -b <branch_name> <hash>  # 基于上一次提交创建临时分支
+git push origin <branch_name> # 将临时分支推送到远程，然后发起PR
 ```
 
 </v-click>
@@ -616,9 +623,7 @@ flowchart LR
 
 # Github CI (Actions)
 
-<div class="h-420px overflow-y-auto">
-
-```yaml
+```yaml {all} {maxHeight:'400px'}
 name: build iron ui website
 on:
   push:
@@ -647,8 +652,6 @@ jobs:
           FOLDER: storybook-static # The folder the action should deploy.
 
 ```
-
-</div>
 
 ---
 
