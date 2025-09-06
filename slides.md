@@ -1,7 +1,7 @@
 ---
 theme: seriph
 title: 代码管理及集成 (基本Git)
-background: https://source.unsplash.com/collection/94734566/1920x1080
+background: https://picsum.photos/1920/1080
 class: "text-center"
 highlighter: shiki
 drawings: 
