@@ -1,9 +1,0 @@
-import{_ as m}from"./slidev/CodeBlockWrapper.vue_vue_type_script_setup_true_lang-C1lKNbSj.js";import{b as p,o as r,w as n,g as s,e as c,m as u,D as e,v as d,x as g,B as a}from"./modules/vue-BSBrl5ir.js";import{I as f}from"./slidev/default-D_1aDfUc.js";import{u as h,f as k}from"./slidev/context-CP-riexH.js";import"./modules/unplugin-icons-nYm-bVeF.js";import"./index-F_USY7Ft.js";import"./modules/shiki-CJEomhxH.js";const P={__name:"slides.md__slidev_17",setup(_){const{$clicksContext:i,$frontmatter:o}=h();return i.setup(),(b,t)=>{const l=m;return r(),p(f,d(g(a(k)(a(o),16))),{default:n(()=>[t[1]||(t[1]=s("h1",null,"Commit message",-1)),t[2]||(t[2]=s("p",null,[s("a",{href:"https://commitlint.js.org/#/",target:"_blank"},"工具 (commitlint)")],-1)),c(l,u({},{title:"",ranges:["1"]}),{default:n(()=>[...t[0]||(t[0]=[s("pre",{class:"shiki shiki-themes vitesse-dark vitesse-light slidev-code",style:{"--shiki-dark":"#dbd7caee","--shiki-light":"#393a34","--shiki-dark-bg":"#121212","--shiki-light-bg":"#ffffff"}},[s("code",{class:"language-text"},[s("span",{class:"line"},[s("span",null,'$ git commit -m "change commit message position"  ')]),e(`
-`),s("span",{class:"line"},[s("span",null,"⧗   input: change commit message position")]),e(`
-`),s("span",{class:"line"},[s("span",null,"✖   subject may not be empty [subject-empty]")]),e(`
-`),s("span",{class:"line"},[s("span",null,"✖   type may not be empty [type-empty]")]),e(`
-`),s("span",{class:"line"},[s("span")]),e(`
-`),s("span",{class:"line"},[s("span",null,"✖   found 2 problems, 0 warnings")]),e(`
-`),s("span",{class:"line"},[s("span",null,"ⓘ   Get help: https://github.com/conventional-changelog/commitlint/#what-is-commitlint")]),e(`
-`),s("span",{class:"line"},[s("span")]),e(`
-`),s("span",{class:"line"},[s("span",null,"husky - commit-msg hook exited with code 1 (error)")])])],-1)])]),_:1},16)]),_:1},16)}}};export{P as default};
