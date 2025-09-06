@@ -30,7 +30,7 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "packageManager": "pnpm@10",
+  "packageManager": "pnpm@10.15.1",
   "engines": {
     "node": ">=20",
     "pnpm": ">=10"
