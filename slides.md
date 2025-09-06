@@ -249,10 +249,10 @@ git cherry-pick 它常用于将部分变动（某几个commit）应用到指定�
 # 将指定的提交应用到当前分支
 git cherry-pick <commitHash> [<commitHash> ...]
 
-# 将commitA到commitB的所有提交应用到当前分支
+# 将commitA之后到commitB的所有提交应用到当前分支(不包含commitA)
 git cherry-pick commitA..commitB
 
-# 将commitA到commitB的所有提交应用到当前分支,但不包含commitA
+# 将commitA到commitB的所有提交应用到当前分支(包含commitA)
 git cherry-pick commitA^..commitB
 
 # 将指定分支的最近一次提交应用到当前分支
