@@ -184,7 +184,7 @@ gitGraph
 
 ```
 git reflog  # 查看操作记录
-git reset HEAD@{num} # 回到指定的位置
+git reset HEAD@{num} # 回到指定的位置 [powershell 中需要用引号包裹 'HEAD@{num}']
 
 # 操作记录信息
 707153e (HEAD -> main, ...) HEAD@{0}: C1
